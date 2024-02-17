@@ -120,8 +120,9 @@ exports.verifyToken = asyncHandler(async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     req.user = decoded;
+    const { user } = req;
 
-    res.status(200).json({ message: 'Token is valid' });
+    res.status(200).json({ message: 'Token is valid', user });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.status(401).json({ error: 'Token expired' });
