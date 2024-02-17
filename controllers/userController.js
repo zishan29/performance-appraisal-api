@@ -55,8 +55,8 @@ exports.signup = [
           email: req.body.email,
           password: hashedPassword,
           userType: req.body.userType,
-          department: req.body.department ? req.body.department : null,
-          position: req.body.position ? req.body.position : null,
+          department: req.body.department,
+          position: req.body.position,
         });
         await newUser.save();
         const token = jwt.sign({ newUser }, process.env.SECRET_KEY, {

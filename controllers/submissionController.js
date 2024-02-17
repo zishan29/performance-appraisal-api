@@ -8,6 +8,7 @@ exports.addSubmission = asyncHandler(async (req, res, next) => {
       facultyId: req.user._id,
       categoryId: req.body.categoryId,
       score: req.body.score,
+      inputData: req.body.inputData,
     });
     await newSubmission.save();
     res.status(200).json({ message: 'New submission created successfully' });
