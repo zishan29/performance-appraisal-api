@@ -16,6 +16,8 @@ router.post(
   submissionController.addSubmission,
 );
 
+router.post('/verifyToken', userController.verifyToken);
+
 router.get(
   '/categories',
   passport.authenticate('jwt', { session: false }),
