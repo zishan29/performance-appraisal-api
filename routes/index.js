@@ -25,7 +25,7 @@ router.get(
 );
 
 router.get(
-  '/Completed',
+  '/completed',
   passport.authenticate('jwt', { session: false }),
   submissionController.getCompletedForms,
 );
