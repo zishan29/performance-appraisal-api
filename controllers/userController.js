@@ -10,13 +10,13 @@ const Submission = require('../models/submission');
 exports.signup = [
   body('firstName').custom(async (firstName) => {
     if (!firstName || firstName.length < 3) {
-      throw new Error('firstName is too short');
+      throw new Error('First name is too short');
     }
     return true;
   }),
   body('lastName').custom(async (lastName) => {
     if (!lastName || lastName.length < 3) {
-      throw new Error('lastName is too short');
+      throw new Error('Last name is too short');
     }
     return true;
   }),
@@ -66,7 +66,7 @@ exports.signup = [
         if (req.body.userType !== 'admin') {
           const AI = new Category({
             name: 'Academic Involvement',
-            facultyId: newUser._id, // Save user ID here
+            facultyId: newUser._id,
             totalForms: 7,
             maxScore: 2000,
           });
