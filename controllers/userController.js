@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const User = require('../models/user');
 const Category = require('../models/category');
+const Submission = require('../models/submission');
 
 exports.signup = [
   body('firstName').custom(async (firstName) => {
@@ -69,7 +70,14 @@ exports.signup = [
             totalForms: 7,
             maxScore: 2000,
           });
+          const SD = new Category({
+            name: 'Student Development',
+            facultyId: newUser._id,
+            totalForms: 4,
+            maxScore: 2000,
+          });
           await AI.save();
+          await SD.save();
         }
         res
           .status(200)
@@ -129,5 +137,25 @@ exports.verifyToken = asyncHandler(async (req, res, next) => {
     } else {
       res.status(401).json({ error: 'Unauthorized' });
     }
+  }
+});
+
+exports.getUserProgress = asyncHandler(async (req, res, next) => {
+  try {
+    const categories = await Category.find({
+      facultyId: req.user._id,
+    });
+    const progress = {};
+    const countPromises = categories.map(async (category) => {
+      const count = await Submission.countDocuments({
+        categoryId: category._id,
+      });
+      const percentage = (count / category.totalForms) * 100;
+      progress[category.name] = percentage;
+    });
+    await Promise.all(countPromises);
+    res.status(200).json({ progress });
+  } catch (err) {
+    res.status(400).json({ err });
   }
 });

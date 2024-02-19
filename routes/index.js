@@ -25,9 +25,9 @@ router.get(
 );
 
 router.get(
-  '/completed',
+  '/userProgress',
   passport.authenticate('jwt', { session: false }),
-  submissionController.getCompletedForms,
+  userController.getUserProgress,
 );
 
 module.exports = router;
