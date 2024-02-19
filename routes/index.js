@@ -30,4 +30,10 @@ router.get(
   userController.getUserProgress,
 );
 
+router.get(
+  '/userScores',
+  passport.authenticate('jwt', { session: false }),
+  userController.getUserScores,
+);
+
 module.exports = router;

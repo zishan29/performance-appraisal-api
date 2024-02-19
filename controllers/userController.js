@@ -159,3 +159,22 @@ exports.getUserProgress = asyncHandler(async (req, res, next) => {
     res.status(400).json({ err });
   }
 });
+
+exports.getUserScores = asyncHandler(async (req, res, next) => {
+  try {
+    const categories = await Category.find({ facultyId: req.user._id });
+    const scores = {};
+    const scorePromises = categories.map(async (category) => {
+      const submissions = await Submission.find({
+        facultyId: req.user._id,
+        categoryId: category._id,
+      });
+      const totalScore = submissions.reduce((acc, curr) => acc + curr.score, 0);
+      scores[category.name] = totalScore;
+    });
+    await Promise.all(scorePromises);
+    res.status(200).json({ scores });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+});
