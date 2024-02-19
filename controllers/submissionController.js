@@ -16,3 +16,14 @@ exports.addSubmission = asyncHandler(async (req, res, next) => {
     res.status(400).json({ err });
   }
 });
+
+exports.getCompletedForms = asyncHandler(async (req, res, next) => {
+  try {
+    const count = await Submission.countDocuments({
+      categoryId: req.body.categoryId,
+    });
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});

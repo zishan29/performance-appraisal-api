@@ -24,4 +24,10 @@ router.get(
   categoryController.getAllCategories,
 );
 
+router.get(
+  '/Completed',
+  passport.authenticate('jwt', { session: false }),
+  submissionController.getCompletedForms,
+);
+
 module.exports = router;
