@@ -36,4 +36,10 @@ router.get(
   userController.getUserScores,
 );
 
+router.get(
+  '/submission',
+  passport.authenticate('jwt', { session: false }),
+  submissionController.getSubmission,
+);
+
 module.exports = router;
