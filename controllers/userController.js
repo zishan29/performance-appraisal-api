@@ -65,7 +65,7 @@ exports.signup = [
         });
         if (req.body.userType !== 'admin') {
           const AI = new Category({
-            name: 'Administrative Bucket',
+            name: 'Academic Involvement',
             facultyId: newUser._id, // Save user ID here
             totalForms: 7,
             maxScore: 2000,
