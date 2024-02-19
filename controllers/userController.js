@@ -50,7 +50,7 @@ exports.signup = [
     } else {
       const hashedPassword = await bcrypt.hash(req.body.password, 12);
       try {
-        const newUser = new User({
+        const user = new User({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
@@ -59,20 +59,20 @@ exports.signup = [
           department: req.body.department,
           position: req.body.position,
         });
-        await newUser.save();
-        const token = jwt.sign({ newUser }, process.env.SECRET_KEY, {
+        await user.save();
+        const token = jwt.sign({ user }, process.env.SECRET_KEY, {
           expiresIn: '1d',
         });
         if (req.body.userType !== 'admin') {
           const AI = new Category({
             name: 'Academic Involvement',
-            facultyId: newUser._id,
+            facultyId: user._id,
             totalForms: 7,
             maxScore: 2000,
           });
           const SD = new Category({
             name: 'Student Development',
-            facultyId: newUser._id,
+            facultyId: user._id,
             totalForms: 4,
             maxScore: 2000,
           });
@@ -81,7 +81,7 @@ exports.signup = [
         }
         res
           .status(200)
-          .json({ message: 'User created successfully', newUser, token });
+          .json({ message: 'User created successfully', user, token });
       } catch (err) {
         res.status(400).json({ err });
       }
@@ -105,7 +105,7 @@ exports.login = asyncHandler(async (req, res, next) => {
           _id: user._id,
           userType: user.userType,
         };
-        const token = jwt.sign({ user: userData }, process.env.SECRET_KEY, {
+        const token = jwt.sign({ user }, process.env.SECRET_KEY, {
           expiresIn: '1d',
         });
 
