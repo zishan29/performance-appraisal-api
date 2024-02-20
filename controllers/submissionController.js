@@ -10,11 +10,15 @@ exports.addSubmission = asyncHandler(async (req, res, next) => {
     try {
       const uniqueIdentifier = uuidv4();
 
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        resource_type: 'auto',
-        public_id: uniqueIdentifier,
-        folder: 'PerformanceAppraisal/certificates/',
-      });
+      const imageBuffer = req.file.buffer.toString('base64');
+
+      const result = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${imageBuffer}`,
+        {
+          public_id: uniqueIdentifier,
+          folder: 'PerformanceAppraisal/certificates/',
+        },
+      );
 
       fileUrl = result.secure_url;
     } catch (error) {

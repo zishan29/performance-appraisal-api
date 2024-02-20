@@ -10,6 +10,7 @@ const SubmissionSchema = new Schema({
   reviewStatus: { type: String, default: 'Pending' },
   reviewComment: { type: String },
   inputData: { type: Schema.Types.Mixed },
+  evidence: { type: String },
 });
 
 module.exports = mongoose.model('Submission', SubmissionSchema);
