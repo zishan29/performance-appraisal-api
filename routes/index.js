@@ -1,10 +1,14 @@
 const express = require('express');
 const passport = require('passport');
+const multer = require('multer');
 const userController = require('../controllers/userController');
 const submissionController = require('../controllers/submissionController');
 const categoryController = require('../controllers/categoryController');
 
 const router = express.Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 router.post('/signup', userController.signup);
 
@@ -13,6 +17,7 @@ router.post('/login', userController.login);
 router.post(
   '/submissions',
   passport.authenticate('jwt', { session: false }),
+  upload.single('file'),
   submissionController.addSubmission,
 );
 
