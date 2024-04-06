@@ -28,7 +28,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(
   cors({
-    origin: ['https://snapshpere.vercel.app', 'http://localhost:3000'],
+    origin: ['https://performance-appriasal.web.app', 'http://localhost:3000'],
     credentials: true,
   }),
 );
