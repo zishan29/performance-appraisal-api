@@ -45,7 +45,7 @@ exports.addSubmission = asyncHandler(async (req, res, next) => {
 
 exports.getSubmission = asyncHandler(async (req, res) => {
   try {
-    const submission = await Submission.findOne({
+    const submission = await Submission.find({
       name: req.query.name,
       facultyId: req.query.userId,
     });
