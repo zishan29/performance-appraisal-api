@@ -43,10 +43,10 @@ exports.addSubmission = asyncHandler(async (req, res, next) => {
   }
 });
 
-exports.getSubmission = asyncHandler(async (req, res, next) => {
+exports.getSubmission = asyncHandler(async (req, res) => {
   try {
-    const submission = await Submission.find({ name: req.query.name });
-    res.status(200).json({ submission });
+    const submission = await Submission.findOne({ name: req.body.name });
+    res.status(200).json(submission);
   } catch (err) {
     res.status(400).json({ err });
   }
