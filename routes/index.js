@@ -47,4 +47,11 @@ router.get(
   submissionController.getSubmission,
 );
 
+router.put(
+  '/submission',
+  passport.authenticate('jwt', { session: false }),
+  upload.single('file'),
+  submissionController.editSubmission,
+);
+
 module.exports = router;
