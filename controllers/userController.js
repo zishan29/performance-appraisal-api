@@ -178,3 +178,13 @@ exports.getUserScores = asyncHandler(async (req, res, next) => {
     res.status(400).json({ err });
   }
 });
+
+exports.getUserDetails = (req, res) => {
+  User.findOne({ _id: req.user._id })
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};

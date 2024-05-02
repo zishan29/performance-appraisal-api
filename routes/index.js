@@ -24,6 +24,12 @@ router.post(
 router.post('/verifyToken', userController.verifyToken);
 
 router.get(
+  '/userDetails',
+  passport.authenticate('jwt', { session: false }),
+  userController.getUserDetails,
+);
+
+router.get(
   '/categories',
   passport.authenticate('jwt', { session: false }),
   categoryController.getAllCategories,
