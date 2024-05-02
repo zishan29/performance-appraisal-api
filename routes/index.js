@@ -29,6 +29,12 @@ router.get(
   userController.getUserDetails,
 );
 
+router.post(
+  '/updateUserDetails',
+  passport.authenticate('jwt', { session: false }),
+  userController.updateUserDetails,
+);
+
 router.get(
   '/categories',
   passport.authenticate('jwt', { session: false }),

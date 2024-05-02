@@ -188,3 +188,13 @@ exports.getUserDetails = (req, res) => {
       res.status(400).json(err);
     });
 };
+
+exports.updateUserDetails = (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true })
+    .then((updatedUser) => {
+      res.json(updatedUser);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
